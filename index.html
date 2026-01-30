@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RAPP Hub - AI Implementation Registry</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
+    <style>
+        :root {
+            --primary: #8b5cf6;
+            --primary-dark: #7c3aed;
+            --secondary: #06b6d4;
+            --accent: #f59e0b;
+            --background: #0f0f1a;
+            --surface: #1a1a2e;
+            --surface-light: #2d2d44;
+            --text: #f1f5f9;
+            --text-muted: #94a3b8;
+            --border: #3d3d5c;
+            --success: #10b981;
+            --warning: #f59e0b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--background);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
+            border-bottom: 1px solid var(--border);
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tagline {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        .ecosystem-link {
+            margin-top: 1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 2rem;
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .ecosystem-link:hover {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            margin: 1.5rem 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        .stat {
+            text-align: center;
+            padding: 1rem 2rem;
+            background: var(--surface);
+            border-radius: 0.75rem;
+            border: 1px solid var(--border);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Controls */
+        .controls {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.875rem 1rem 0.875rem 2.75rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+        }
+
+        .search-box::before {
+            content: "🔍";
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.75rem 1.25rem;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            background: var(--surface-light);
+            color: var(--text);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Grid */
+        .grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem 4rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 1rem;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--surface-light) 0%, var(--surface) 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .card-title-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            line-height: 1;
+        }
+
+        .card-title-section {
+            flex: 1;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .card-meta-badges {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.03em;
+        }
+
+        .badge-category {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--primary);
+        }
+
+        .badge-version {
+            background: rgba(6, 182, 212, 0.2);
+            color: var(--secondary);
+        }
+
+        .card-body {
+            padding: 1.5rem;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            flex: 1;
+        }
+
+        .card-features {
+            margin-bottom: 1rem;
+        }
+
+        .feature-tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            background: var(--surface-light);
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin: 0.125rem;
+        }
+
+        /* Stack badges */
+        .stack-info {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stack-badge {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            padding: 0.25rem 0.5rem;
+            background: var(--background);
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Dependencies */
+        .dependencies {
+            margin-bottom: 1rem;
+        }
+
+        .dep-title {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .dep-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+        }
+
+        .dep-item {
+            padding: 0.2rem 0.5rem;
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 0.25rem;
+            font-size: 0.75rem;
+            color: var(--success);
+            font-family: monospace;
+        }
+
+        .dep-item.skill {
+            background: rgba(245, 158, 11, 0.15);
+            border-color: rgba(245, 158, 11, 0.3);
+            color: var(--warning);
+        }
+
+        /* Buttons */
+        .card-actions {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: auto;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .action-btn.primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            background: var(--primary-dark);
+        }
+
+        .action-btn.secondary {
+            background: var(--surface-light);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .action-btn.secondary:hover {
+            background: var(--border);
+        }
+
+        /* Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal {
+            background: var(--surface);
+            border-radius: 1rem;
+            max-width: 900px;
+            width: 100%;
+            max-height: 90vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            line-height: 1;
+        }
+
+        .modal-close:hover {
+            color: var(--text);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            flex: 1;
+        }
+
+        .install-steps {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .install-step {
+            margin-bottom: 1rem;
+        }
+
+        .install-step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .step-code {
+            background: var(--surface-light);
+            padding: 0.75rem 1rem;
+            border-radius: 0.25rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.875rem;
+            overflow-x: auto;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .step-code:hover {
+            background: var(--border);
+        }
+
+        .step-code.copied {
+            background: rgba(16, 185, 129, 0.2);
+        }
+
+        .rapp-json {
+            background: var(--background);
+            border: 1px solid var(--border);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            font-family: 'Monaco', 'Menlo', monospace;
+            font-size: 0.8rem;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            color: var(--text-muted);
+        }
+
+        footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 4rem;
+            color: var(--text-muted);
+        }
+
+        .loading-spinner {
+            width: 48px;
+            height: 48px;
+            border: 3px solid var(--surface-light);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .filter-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">🏠</div>
+        <h1>RAPP Hub</h1>
+        <p class="tagline">Central Registry for Complete AI Implementations</p>
+        <a href="https://kody-w.github.io/RAPP_Store/" class="ecosystem-link" target="_blank">
+            📦 Browse RAPP Store (Agents & Skills)
+        </a>
+    </header>
+
+    <div class="stats">
+        <div class="stat">
+            <div class="stat-value" id="impl-count">-</div>
+            <div class="stat-label">Implementations</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="category-count">-</div>
+            <div class="stat-label">Categories</div>
+        </div>
+        <div class="stat">
+            <div class="stat-value" id="store-agents">-</div>
+            <div class="stat-label">Store Agents</div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search implementations...">
+        </div>
+        <div class="filter-buttons" id="category-filters">
+            <button class="filter-btn active" data-filter="all">All</button>
+        </div>
+    </div>
+
+    <div class="grid" id="items-grid">
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <p>Loading RAPP Hub...</p>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modal-title">Install Implementation</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body"></div>
+        </div>
+    </div>
+
+    <footer>
+        <p>
+            <a href="https://github.com/kody-w/RAPP_Hub" target="_blank">GitHub</a> ·
+            <a href="https://github.com/kody-w/RAPP_Store" target="_blank">RAPP Store</a> ·
+            <a href="https://github.com/kody-w/RAPP_Hub/blob/main/docs/PROTOCOL.md" target="_blank">Protocol Docs</a>
+        </p>
+        <p style="margin-top: 0.5rem;">Complete AI implementations with RAPP Store dependencies</p>
+    </footer>
+
+    <script>
+        // Configuration
+        const MANIFEST_URL = 'https://raw.githubusercontent.com/kody-w/RAPP_Hub/main/manifest.json';
+        const STORE_MANIFEST_URL = 'https://raw.githubusercontent.com/kody-w/RAPP_Store/main/manifest.json';
+
+        // State
+        let hubData = null;
+        let storeData = null;
+        let currentFilter = 'all';
+        let searchQuery = '';
+
+        // Initialize
+        async function init() {
+            try {
+                // Fetch both manifests in parallel
+                const [hubResponse, storeResponse] = await Promise.all([
+                    fetch(MANIFEST_URL),
+                    fetch(STORE_MANIFEST_URL)
+                ]);
+
+                hubData = await hubResponse.json();
+                storeData = await storeResponse.json();
+
+                updateStats();
+                renderCategoryFilters();
+                renderItems();
+            } catch (error) {
+                console.error('Error loading data:', error);
+                document.getElementById('items-grid').innerHTML = `
+                    <div class="loading">
+                        <p>Error loading RAPP Hub. Please try again later.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Update stats
+        function updateStats() {
+            document.getElementById('impl-count').textContent = hubData.implementations?.length || 0;
+            document.getElementById('category-count').textContent = hubData.categories?.length || 0;
+            document.getElementById('store-agents').textContent = storeData?.agents?.length || 0;
+        }
+
+        // Render category filters
+        function renderCategoryFilters() {
+            const container = document.getElementById('category-filters');
+            const categories = hubData.categories || [];
+
+            let html = '<button class="filter-btn active" data-filter="all">All</button>';
+            categories.forEach(cat => {
+                html += `<button class="filter-btn" data-filter="${cat.id}">${cat.icon} ${cat.name}</button>`;
+            });
+
+            container.innerHTML = html;
+
+            // Rebind events
+            container.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    container.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentFilter = btn.dataset.filter;
+                    renderItems();
+                });
+            });
+        }
+
+        // Get filtered items
+        function getFilteredItems() {
+            let items = hubData.implementations || [];
+
+            if (currentFilter !== 'all') {
+                items = items.filter(item => item.category === currentFilter);
+            }
+
+            if (searchQuery) {
+                const query = searchQuery.toLowerCase();
+                items = items.filter(item =>
+                    item.name.toLowerCase().includes(query) ||
+                    item.description.toLowerCase().includes(query) ||
+                    (item.tags || []).some(tag => tag.toLowerCase().includes(query))
+                );
+            }
+
+            return items;
+        }
+
+        // Get category info
+        function getCategoryInfo(categoryId) {
+            return (hubData.categories || []).find(c => c.id === categoryId) || { name: categoryId, icon: '📁' };
+        }
+
+        // Render items
+        function renderItems() {
+            const items = getFilteredItems();
+            const grid = document.getElementById('items-grid');
+
+            if (items.length === 0) {
+                grid.innerHTML = '<div class="loading"><p>No implementations found matching your criteria.</p></div>';
+                return;
+            }
+
+            grid.innerHTML = items.map(item => {
+                const category = getCategoryInfo(item.category);
+                const agents = item.dependencies?.rapp_store?.agents || [];
+                const skills = item.dependencies?.rapp_store?.skills || [];
+
+                return `
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title-row">
+                                <span class="card-icon">${item.icon || '🤖'}</span>
+                                <div class="card-title-section">
+                                    <h3 class="card-title">${item.name}</h3>
+                                    <div class="card-meta-badges">
+                                        <span class="badge badge-category">${category.icon} ${category.name}</span>
+                                        <span class="badge badge-version">v${item.version || '1.0.0'}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <p class="card-description">${item.description}</p>
+
+                            <div class="stack-info">
+                                ${item.stack?.runtime ? `<span class="stack-badge">🐍 ${item.stack.runtime} ${item.stack.version || ''}</span>` : ''}
+                                ${item.stack?.platform ? `<span class="stack-badge">☁️ ${item.stack.platform}</span>` : ''}
+                                ${item.stack?.ai ? `<span class="stack-badge">🧠 ${item.stack.ai}</span>` : ''}
+                            </div>
+
+                            ${(agents.length > 0 || skills.length > 0) ? `
+                                <div class="dependencies">
+                                    <div class="dep-title">RAPP Store Dependencies</div>
+                                    <div class="dep-list">
+                                        ${agents.map(a => `<span class="dep-item">${a}</span>`).join('')}
+                                        ${skills.map(s => `<span class="dep-item skill">${s}</span>`).join('')}
+                                    </div>
+                                </div>
+                            ` : ''}
+
+                            <div class="card-features">
+                                ${(item.features || []).slice(0, 4).map(f => `<span class="feature-tag">${f}</span>`).join('')}
+                            </div>
+
+                            <div class="card-actions">
+                                <button class="action-btn primary" onclick="showInstall('${item.id}')">
+                                    📥 Install
+                                </button>
+                                <a href="${item.repo}" target="_blank" class="action-btn secondary">
+                                    🔗 View Repo
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Show install modal
+        function showInstall(itemId) {
+            const item = (hubData.implementations || []).find(i => i.id === itemId);
+            if (!item) return;
+
+            const agents = item.dependencies?.rapp_store?.agents || [];
+            const skills = item.dependencies?.rapp_store?.skills || [];
+
+            const rappJson = JSON.stringify({
+                name: item.id,
+                version: item.version,
+                description: item.description,
+                dependencies: item.dependencies
+            }, null, 2);
+
+            document.getElementById('modal-title').textContent = `Install: ${item.name}`;
+            document.getElementById('modal-body').innerHTML = `
+                <h3 style="margin-bottom: 1rem;">Quick Install</h3>
+                <div class="install-steps">
+                    <div class="install-step">
+                        <div class="step-label">1. Clone the repository</div>
+                        <div class="step-code" onclick="copyCommand(this)">${item.quickstart?.clone || `git clone ${item.repo}`}</div>
+                    </div>
+                    <div class="install-step">
+                        <div class="step-label">2. Setup</div>
+                        <div class="step-code" onclick="copyCommand(this)">${item.quickstart?.setup || 'pip install -r requirements.txt'}</div>
+                    </div>
+                    ${(agents.length > 0 || skills.length > 0) ? `
+                    <div class="install-step">
+                        <div class="step-label">3. Install RAPP Store dependencies</div>
+                        <div class="step-code" onclick="copyCommand(this)">rapp-hub deps install</div>
+                    </div>
+                    ` : ''}
+                    <div class="install-step">
+                        <div class="step-label">${(agents.length > 0 || skills.length > 0) ? '4' : '3'}. Run</div>
+                        <div class="step-code" onclick="copyCommand(this)">${item.quickstart?.run || 'python main.py'}</div>
+                    </div>
+                </div>
+
+                ${(agents.length > 0 || skills.length > 0) ? `
+                <h3 style="margin: 1.5rem 0 1rem;">RAPP Store Dependencies</h3>
+                <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.9rem;">
+                    This implementation requires the following agents/skills from RAPP Store:
+                </p>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+                    ${agents.map(a => `<span class="dep-item">${a}</span>`).join('')}
+                    ${skills.map(s => `<span class="dep-item skill">${s}</span>`).join('')}
+                </div>
+                ` : ''}
+
+                <h3 style="margin: 1.5rem 0 1rem;">rapp.json</h3>
+                <div class="rapp-json">${rappJson}</div>
+            `;
+
+            document.getElementById('modal').classList.add('active');
+        }
+
+        // Copy command
+        function copyCommand(element) {
+            const text = element.textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                element.classList.add('copied');
+                const original = element.textContent;
+                element.textContent = '✓ Copied!';
+                setTimeout(() => {
+                    element.textContent = original;
+                    element.classList.remove('copied');
+                }, 1500);
+            });
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+
+        // Event listeners
+        document.getElementById('search').addEventListener('input', (e) => {
+            searchQuery = e.target.value;
+            renderItems();
+        });
+
+        document.getElementById('modal').addEventListener('click', (e) => {
+            if (e.target.id === 'modal') closeModal();
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        // Initialize
+        init();
+    </script>
+</body>
+</html>
