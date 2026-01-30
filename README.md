@@ -4,6 +4,14 @@
 
 Discover, share, and deploy production-ready AI solutions. RAPP Hub is to AI implementations what GitHub is to code repositories - a central place to find and share complete, working RAPP-based AI systems.
 
+## RAPP Ecosystem
+
+| Component | Description | Link |
+|-----------|-------------|------|
+| **RAPP Installer** | Installation & Azure deployment | [rapp-installer](https://github.com/kody-w/rapp-installer) |
+| **RAPP Hub** | Complete AI implementations | [RAPP_Hub](https://github.com/kody-w/RAPP_Hub) |
+| **RAPP Store** | Individual agents & skills | [RAPP_Store](https://github.com/kody-w/RAPP_Store) |
+
 ## How It Works
 
 ```

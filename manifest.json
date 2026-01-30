@@ -16,6 +16,15 @@
     "discovery_endpoint": "manifest.json",
     "raw_base": "https://raw.githubusercontent.com/kody-w/RAPP_Hub/main",
     "store_registry": "https://raw.githubusercontent.com/kody-w/RAPP_Store/main/manifest.json",
+    "installer": {
+      "name": "RAPP Installer",
+      "url": "https://github.com/kody-w/rapp-installer",
+      "install_sh": "https://raw.githubusercontent.com/kody-w/rapp-installer/main/install.sh",
+      "install_ps1": "https://raw.githubusercontent.com/kody-w/rapp-installer/main/install.ps1",
+      "deploy_sh": "https://raw.githubusercontent.com/kody-w/rapp-installer/main/deploy.sh",
+      "deploy_ps1": "https://raw.githubusercontent.com/kody-w/rapp-installer/main/deploy.ps1",
+      "arm_template": "https://raw.githubusercontent.com/kody-w/rapp-installer/main/azuredeploy.json"
+    },
     "compatible_stores": [
       {
         "name": "RAPP Store",
