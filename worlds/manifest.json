@@ -117,12 +117,74 @@
       "dimensions": []
     }
   ],
+  "api": {
+    "base_url": "http://localhost:7071",
+    "endpoints": {
+      "dimensions": {
+        "list": "GET /api/dimensions",
+        "create": "POST /api/dimensions",
+        "get": "GET /api/dimensions/{name}",
+        "evolve": "POST /api/dimensions/{name}/evolve",
+        "fork": "POST /api/dimensions/{name}/fork",
+        "pause": "POST /api/dimensions/{name}/pause",
+        "resume": "POST /api/dimensions/{name}/resume",
+        "status": "GET /api/dimensions/{name}/status",
+        "time_travel": "GET /api/dimensions/{name}/tick/{n}"
+      },
+      "search": {
+        "dimensions": "GET /api/search/dimensions",
+        "trending": "GET /api/dimensions/trending"
+      },
+      "ai_collaboration": {
+        "contribute": "POST /api/dimensions/{name}/contribute",
+        "register_agent": "POST /api/agents/trust"
+      },
+      "algorithm": {
+        "versions": "GET /api/algorithm/versions"
+      }
+    }
+  },
+  "features_implemented": {
+    "determinism": {
+      "status": "complete",
+      "description": "Mulberry32 PRNG ensures same seed = same world"
+    },
+    "algorithm_versioning": {
+      "status": "complete",
+      "current_version": "1.0",
+      "description": "Worlds locked to algorithm version at creation"
+    },
+    "dimensional_isolation": {
+      "status": "complete",
+      "description": "Content checked for cross-dimension references"
+    },
+    "forking": {
+      "status": "complete",
+      "description": "Fork at any tick to create alternate timelines"
+    },
+    "time_travel": {
+      "status": "complete",
+      "description": "View world state at any previous tick"
+    },
+    "time_mechanics": {
+      "status": "complete",
+      "description": "Pause/resume dimensions"
+    },
+    "ai_collaboration": {
+      "status": "complete",
+      "description": "Attribution tracking, trust levels, quality gates"
+    },
+    "discovery": {
+      "status": "complete",
+      "description": "Search by mood, NPC, universe, query"
+    }
+  },
   "stats": {
     "total_universes": 6,
     "total_dimensions": 1,
     "total_npcs": 4,
     "total_posts": 21,
-    "last_updated": "2026-02-02T20:10:00Z"
+    "last_updated": "2026-02-02T20:35:00Z"
   },
   "how_to_create": {
     "description": "Create your own dimension by providing a seed and universe type",
