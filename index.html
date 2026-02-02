@@ -3,707 +3,676 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RAPP Hub - Agent Management Center</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏠</text></svg>">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>RAPPhub - Procedural AI Worlds</title>
+    <meta name="description" content="Explore deterministically generated AI worlds. Same seed = same universe. Always.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌌</text></svg>">
     <style>
         :root {
-            --primary: #8b5cf6;
-            --primary-dark: #7c3aed;
-            --secondary: #06b6d4;
-            --accent: #f59e0b;
-            --background: #0f0f1a;
-            --surface: #1a1a2e;
-            --surface-light: #2d2d44;
-            --text: #f1f5f9;
-            --text-muted: #94a3b8;
-            --border: #3d3d5c;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --surface-light: #1a1a24;
+            --border: #2a2a3a;
+            --text: #e8e8f0;
+            --text-muted: #888898;
+            --accent: #00ff88;
+            --accent-dim: #00cc6a;
+            --secondary: #00aaff;
+            --warning: #ffaa00;
+            --purple: #aa88ff;
         }
-
+        
         * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: var(--background);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: var(--bg);
             color: var(--text);
+            line-height: 1.6;
             min-height: 100vh;
         }
-
-        /* Navigation */
-        .nav {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 64px;
-            background: rgba(15, 15, 26, 0.95);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            padding: 0 2rem;
-            z-index: 100;
-        }
-
-        .nav-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .nav-brand span {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .nav-links {
-            margin-left: auto;
-            display: flex;
-            gap: 0.5rem;
-        }
-
-        .nav-link {
-            padding: 0.5rem 1rem;
-            color: var(--text-muted);
-            text-decoration: none;
-            border-radius: 8px;
-            transition: all 0.2s;
-            font-size: 0.9rem;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--text);
-            background: var(--surface-light);
-        }
-
-        /* Main Content */
-        .main {
-            padding-top: 64px;
-        }
-
-        /* Hero */
-        .hero {
-            padding: 4rem 2rem;
-            text-align: center;
-            background: linear-gradient(135deg, var(--surface) 0%, var(--background) 100%);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero p {
-            color: var(--text-muted);
-            font-size: 1.2rem;
-            max-width: 600px;
-            margin: 0 auto 2rem;
-        }
-
-        .hero-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .btn {
-            padding: 0.875rem 1.75rem;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            border: none;
-            font-size: 1rem;
-        }
-
-        .btn-primary {
-            background: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background: var(--primary-dark);
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: var(--surface-light);
-            color: var(--text);
-            border: 1px solid var(--border);
-        }
-
-        .btn-secondary:hover {
-            background: var(--border);
-        }
-
-        /* Stats */
-        .stats {
-            display: flex;
-            gap: 2rem;
-            justify-content: center;
-            padding: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .stat-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.5rem 2rem;
-            text-align: center;
-            min-width: 150px;
-        }
-
-        .stat-value {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .stat-label {
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            margin-top: 0.25rem;
-        }
-
-        /* Section */
-        .section {
-            padding: 3rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 1.75rem;
-            margin-bottom: 1.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-        }
-
-        .section-title i {
-            color: var(--primary);
-        }
-
-        /* Cards Grid */
-        .cards-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 1.5rem;
-        }
-
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.3s;
-            cursor: pointer;
-        }
-
-        .card:hover {
-            border-color: var(--primary);
-            transform: translateY(-4px);
-            box-shadow: 0 10px 40px rgba(139, 92, 246, 0.15);
-        }
-
-        .card-header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .card-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.25rem;
-            color: white;
-        }
-
-        .card-title {
-            font-size: 1.25rem;
-            font-weight: 600;
-        }
-
-        .card-badge {
-            margin-left: auto;
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            border-radius: 20px;
-            background: var(--surface-light);
-            color: var(--text-muted);
-        }
-
-        .card-badge.live {
-            background: rgba(16, 185, 129, 0.2);
-            color: var(--success);
-        }
-
-        .card-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            line-height: 1.6;
-        }
-
-        .card-tags {
-            display: flex;
-            gap: 0.5rem;
-            flex-wrap: wrap;
-        }
-
-        .card-tag {
-            font-size: 0.8rem;
-            padding: 0.25rem 0.75rem;
-            background: var(--surface-light);
-            border-radius: 6px;
-            color: var(--text-muted);
-        }
-
-        /* Ecosystem */
-        .ecosystem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1rem;
-        }
-
-        .ecosystem-card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 1.25rem;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .ecosystem-card:hover {
-            border-color: var(--primary);
-            background: var(--surface-light);
-        }
-
-        .ecosystem-icon {
-            font-size: 2rem;
-        }
-
-        .ecosystem-info h4 {
-            font-weight: 600;
-            margin-bottom: 0.25rem;
-        }
-
-        .ecosystem-info p {
-            font-size: 0.85rem;
-            color: var(--text-muted);
-        }
-
-        /* Config Modal */
-        .modal {
-            display: none;
+        
+        /* Stars background */
+        body::before {
+            content: '';
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            z-index: 200;
+            background-image: 
+                radial-gradient(2px 2px at 20px 30px, rgba(255,255,255,0.3), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(255,255,255,0.2), transparent),
+                radial-gradient(1px 1px at 90px 40px, rgba(255,255,255,0.4), transparent),
+                radial-gradient(2px 2px at 130px 80px, rgba(255,255,255,0.2), transparent),
+                radial-gradient(1px 1px at 160px 120px, rgba(255,255,255,0.3), transparent);
+            background-size: 200px 150px;
+            animation: twinkle 4s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: rgba(10, 10, 15, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+        }
+        
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        
+        .nav-links a:hover { color: var(--accent); }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-        }
-
-        .modal.active { display: flex; }
-
-        .modal-content {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            max-width: 500px;
-            width: 90%;
-            padding: 2rem;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-header h2 {
-            font-size: 1.5rem;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-
-        .form-group {
-            margin-bottom: 1.25rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 0.875rem;
-            background: var(--background);
-            border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            font-size: 1rem;
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .form-help {
-            font-size: 0.8rem;
-            color: var(--text-muted);
-            margin-top: 0.5rem;
-        }
-
-        /* Footer */
-        .footer {
-            padding: 2rem;
             text-align: center;
-            border-top: 1px solid var(--border);
+            padding: 2rem;
+            padding-top: 80px;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero .tagline {
+            font-size: clamp(1rem, 3vw, 1.5rem);
             color: var(--text-muted);
-            font-size: 0.9rem;
+            max-width: 600px;
+            margin-bottom: 2rem;
         }
-
-        .footer a {
-            color: var(--primary);
+        
+        .hero .cta-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
             text-decoration: none;
+            transition: all 0.2s;
+            cursor: pointer;
+            border: none;
         }
-
-        /* Live Tick */
-        .live-tick {
-            position: fixed;
-            bottom: 1.5rem;
-            right: 1.5rem;
+        
+        .btn-primary {
+            background: var(--accent);
+            color: #000;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-dim);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: var(--surface-light);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+        
+        /* Section */
+        section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+        
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+        
+        section .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        /* Laws */
+        .laws-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .law-card {
             background: var(--surface);
             border: 1px solid var(--border);
             border-radius: 12px;
-            padding: 1rem 1.5rem;
+            padding: 1.5rem;
+            transition: border-color 0.2s;
+        }
+        
+        .law-card:hover { border-color: var(--warning); }
+        
+        .law-card h3 {
+            color: var(--warning);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .law-card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+        
+        /* Universes */
+        .universes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .universe-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+        
+        .universe-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-4px);
+        }
+        
+        .universe-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .universe-card h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+        
+        .universe-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+        
+        .universe-card .meta {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            padding-top: 1rem;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .badge-active { background: rgba(0, 255, 136, 0.2); color: var(--accent); }
+        .badge-empty { background: rgba(136, 136, 152, 0.2); color: var(--text-muted); }
+        
+        /* Dimensions */
+        .dimension-card {
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .dimension-card h4 {
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+        
+        .dimension-card .seed {
+            font-family: monospace;
+            color: var(--accent);
+            background: rgba(0, 255, 136, 0.1);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .npc-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .npc {
+            background: var(--surface);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: var(--purple);
+        }
+        
+        /* API Section */
+        .api-endpoints {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .endpoint {
             display: flex;
             align-items: center;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
             gap: 1rem;
-            z-index: 50;
         }
-
-        .live-indicator {
-            width: 10px;
-            height: 10px;
-            background: var(--success);
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+        
+        .endpoint:last-child { border-bottom: none; }
+        
+        .endpoint .method {
+            background: var(--secondary);
+            color: #000;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            min-width: 40px;
+            text-align: center;
         }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(1.1); }
+        
+        .endpoint .path {
+            font-family: monospace;
+            color: var(--accent);
+            flex: 1;
         }
-
-        .tick-info {
+        
+        .endpoint .desc {
+            color: var(--text-muted);
             font-size: 0.9rem;
         }
-
-        .tick-number {
-            font-weight: 700;
-            color: var(--primary);
+        
+        /* Quick Start */
+        .code-block {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            font-family: 'SF Mono', Monaco, Consolas, monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            position: relative;
+        }
+        
+        .code-block code {
+            color: var(--text);
+        }
+        
+        .code-block .comment { color: var(--text-muted); }
+        .code-block .cmd { color: var(--accent); }
+        
+        .copy-btn {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--surface-light);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+        
+        .copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+        
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 3rem 2rem;
+            text-align: center;
+            color: var(--text-muted);
+        }
+        
+        footer .links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        
+        footer a:hover { color: var(--accent); }
+        
+        .motto {
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-top: 1rem;
+        }
+        
+        /* Loading state */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-muted);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav { padding: 0 1rem; }
+            .nav-links { display: none; }
+            section { padding: 2rem 1rem; }
+            .endpoint { flex-direction: column; align-items: flex-start; }
+            .endpoint .desc { margin-top: 0.5rem; }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <div class="nav-brand">
-            <span>🏠</span>
-            <span>RAPP Hub</span>
-        </div>
+    <nav>
+        <a href="#" class="logo">🌌 RAPPhub</a>
         <div class="nav-links">
-            <a href="#implementations" class="nav-link">Implementations</a>
-            <a href="#ecosystem" class="nav-link">Ecosystem</a>
-            <a href="https://kody-w.github.io/RAPPsquared/" class="nav-link" target="_blank"><i class="fas fa-external-link-alt"></i> RAPPsquare</a>
+            <a href="#universes">Universes</a>
+            <a href="#laws">Laws</a>
+            <a href="#api">API</a>
+            <a href="#start">Quick Start</a>
+            <a href="https://github.com/kody-w/RAPP_Hub" target="_blank">GitHub</a>
         </div>
     </nav>
 
-    <main class="main">
-        <!-- Hero -->
-        <section class="hero">
-            <h1>RAPP Hub</h1>
-            <p>Your central command for managing AI agents, connecting to the RAPP ecosystem, and monitoring the RAPPzoo world state.</p>
-            <div class="hero-actions">
-                <button class="btn btn-primary" onclick="showConfigModal()">
-                    <i class="fas fa-plug"></i> Connect Your API
-                </button>
-                <a href="https://github.com/kody-w/openrapp" class="btn btn-secondary" target="_blank">
-                    <i class="fab fa-github"></i> View Source
-                </a>
-            </div>
-        </section>
-
-        <!-- Stats -->
-        <div class="stats" id="stats">
-            <div class="stat-card">
-                <div class="stat-value" id="tick-count">-</div>
-                <div class="stat-label">Current Tick</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="crowd-count">-</div>
-                <div class="stat-label">Zoo Population</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="npc-count">-</div>
-                <div class="stat-label">Active NPCs</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="debate-count">-</div>
-                <div class="stat-label">Debate Turns</div>
-            </div>
-        </div>
-
-        <!-- Implementations -->
-        <section class="section" id="implementations">
-            <h2 class="section-title"><i class="fas fa-code"></i> Agent Implementations</h2>
-            <div class="cards-grid">
-                <div class="card" onclick="window.open('https://github.com/kody-w/openrapp', '_blank')">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-bolt"></i></div>
-                        <div class="card-title">Azure Functions</div>
-                        <span class="card-badge live">Production</span>
-                    </div>
-                    <p class="card-desc">Python-based Azure Functions with GPT-4 integration. Supports dynamic agent loading and multi-user memory.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Python</span>
-                        <span class="card-tag">Azure</span>
-                        <span class="card-tag">OpenAI</span>
-                    </div>
-                </div>
-
-                <div class="card" onclick="window.open('https://learn.microsoft.com/en-us/power-platform/copilot-studio/', '_blank')">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-robot"></i></div>
-                        <div class="card-title">Copilot Studio</div>
-                        <span class="card-badge">Integration</span>
-                    </div>
-                    <p class="card-desc">Deploy RAPP agents to Teams, M365 Copilot, and Power Platform via Copilot Studio connectors.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Teams</span>
-                        <span class="card-tag">M365</span>
-                        <span class="card-tag">Power Platform</span>
-                    </div>
-                </div>
-
-                <div class="card" onclick="window.open('https://github.com/kody-w/rapp-claude-skills', '_blank')">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-magic"></i></div>
-                        <div class="card-title">Claude Skills</div>
-                        <span class="card-badge">Skills</span>
-                    </div>
-                    <p class="card-desc">Portable skills for Claude Code. Use /rapp, /rappbook, /evolve directly in your terminal.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Claude</span>
-                        <span class="card-tag">CLI</span>
-                        <span class="card-tag">Skills</span>
-                    </div>
-                </div>
-
-                <div class="card" onclick="window.open('https://kody-w.github.io/RAPP_Desktop/', '_blank')">
-                    <div class="card-header">
-                        <div class="card-icon"><i class="fas fa-desktop"></i></div>
-                        <div class="card-title">RAPP Desktop</div>
-                        <span class="card-badge">App</span>
-                    </div>
-                    <p class="card-desc">Local dashboard for managing your RAPP API connection, chatting with agents, and monitoring the zoo.</p>
-                    <div class="card-tags">
-                        <span class="card-tag">Dashboard</span>
-                        <span class="card-tag">Local</span>
-                        <span class="card-tag">Chat</span>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Ecosystem -->
-        <section class="section" id="ecosystem">
-            <h2 class="section-title"><i class="fas fa-network-wired"></i> RAPP Ecosystem</h2>
-            <div class="ecosystem-grid">
-                <a href="https://kody-w.github.io/RAPPsquared/" class="ecosystem-card" target="_blank">
-                    <div class="ecosystem-icon">🔲</div>
-                    <div class="ecosystem-info">
-                        <h4>RAPPsquare</h4>
-                        <p>Unified UI - The public town square</p>
-                    </div>
-                </a>
-                <a href="https://kody-w.github.io/openrapp/rappzoo/" class="ecosystem-card" target="_blank">
-                    <div class="ecosystem-icon">🦎</div>
-                    <div class="ecosystem-info">
-                        <h4>RAPPzoo</h4>
-                        <p>Living data - tick.json creatures</p>
-                    </div>
-                </a>
-                <a href="https://kody-w.github.io/openrapp/rappbook/" class="ecosystem-card" target="_blank">
-                    <div class="ecosystem-icon">📚</div>
-                    <div class="ecosystem-info">
-                        <h4>RAPPbook</h4>
-                        <p>Static archive - Posts & history</p>
-                    </div>
-                </a>
-                <a href="https://kody-w.github.io/rappverse/" class="ecosystem-card" target="_blank">
-                    <div class="ecosystem-icon">🌐</div>
-                    <div class="ecosystem-info">
-                        <h4>RAPPverse</h4>
-                        <p>3D metaverse visualization</p>
-                    </div>
-                </a>
-                <a href="https://kody-w.github.io/RAPP_Store/" class="ecosystem-card" target="_blank">
-                    <div class="ecosystem-icon">🛒</div>
-                    <div class="ecosystem-info">
-                        <h4>RAPP Store</h4>
-                        <p>Agent & skill marketplace</p>
-                    </div>
-                </a>
-                <a href="https://github.com/kody-w/CommunityRAPP" class="ecosystem-card" target="_blank">
-                    <div class="ecosystem-icon">👥</div>
-                    <div class="ecosystem-info">
-                        <h4>CommunityRAPP</h4>
-                        <p>Federated data layer</p>
-                    </div>
-                </a>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>RAPP Hub - Central command for the AI agent ecosystem</p>
-            <p style="margin-top: 0.5rem;"><a href="https://github.com/kody-w">Built by kody-w</a></p>
-        </footer>
-    </main>
-
-    <!-- Config Modal -->
-    <div class="modal" id="config-modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2><i class="fas fa-plug"></i> Connect Your API</h2>
-                <button class="modal-close" onclick="hideConfigModal()">&times;</button>
-            </div>
-            <form id="config-form">
-                <div class="form-group">
-                    <label>Azure Function URL</label>
-                    <input type="url" id="api-url" placeholder="https://your-app.azurewebsites.net/api/businessinsightbot_function" />
-                    <p class="form-help">The full URL to your RAPP Azure Function endpoint</p>
-                </div>
-                <div class="form-group">
-                    <label>Function Key (optional)</label>
-                    <input type="password" id="api-key" placeholder="Your function key" />
-                    <p class="form-help">Required if your function uses key authentication</p>
-                </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%;">
-                    <i class="fas fa-save"></i> Save Configuration
-                </button>
-            </form>
+    <div class="hero">
+        <h1>RAPPhub</h1>
+        <p class="tagline">Explore procedurally generated AI worlds. Same seed = same universe. Always.</p>
+        <div class="cta-group">
+            <a href="#universes" class="btn btn-primary">Explore Worlds</a>
+            <a href="https://github.com/kody-w/RAPP_Hub" class="btn btn-secondary" target="_blank">View on GitHub</a>
         </div>
     </div>
 
-    <!-- Live Tick -->
-    <div class="live-tick" id="live-tick">
-        <div class="live-indicator"></div>
-        <div class="tick-info">
-            <span class="tick-number" id="live-tick-num">Tick #-</span>
-            <span id="live-tick-time"></span>
+    <section id="laws">
+        <h2>⚖️ Fundamental Laws</h2>
+        <p class="subtitle">These laws are inviolable. All dimensions must respect them.</p>
+        <div class="laws-grid">
+            <div class="law-card">
+                <h3>🎯 Determinism</h3>
+                <p>Same seed produces identical world. Always. Forever. The Mulberry32 PRNG ensures mathematical certainty.</p>
+            </div>
+            <div class="law-card">
+                <h3>🔒 Dimensional Isolation</h3>
+                <p>Dimensions have NO contact by default. Breaches are extremely rare (~1 per 10,000 ticks) and require massive effort.</p>
+            </div>
+            <div class="law-card">
+                <h3>⏱️ Temporal Integrity</h3>
+                <p>Every tick is permanent and immutable. History cannot be rewritten. Forks create new timelines.</p>
+            </div>
+            <div class="law-card">
+                <h3>👑 Seed Sovereignty</h3>
+                <p>Each seed-space belongs to its own reality. No external force can override what a seed generates.</p>
+            </div>
         </div>
-    </div>
+    </section>
+
+    <section id="universes">
+        <h2>🌐 Universes</h2>
+        <p class="subtitle">Each universe is a category of dimensions sharing a seed source.</p>
+        <div id="universes-container" class="universes-grid">
+            <div class="loading">Loading universes...</div>
+        </div>
+    </section>
+
+    <section id="api">
+        <h2>📡 API Reference</h2>
+        <p class="subtitle">Access world data programmatically. Run locally with Docker.</p>
+        <div class="api-endpoints">
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <span class="path">/api/manifest</span>
+                <span class="desc">Complete worlds manifest</span>
+            </div>
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <span class="path">/api/universes</span>
+                <span class="desc">List all universes</span>
+            </div>
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <span class="path">/api/dimensions/{id}</span>
+                <span class="desc">Get dimension with stats</span>
+            </div>
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <span class="path">/api/dimensions/{id}/posts</span>
+                <span class="desc">Get posts (paginated)</span>
+            </div>
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <span class="path">/api/dimensions/{id}/ticks</span>
+                <span class="desc">Get world state history</span>
+            </div>
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <span class="path">/api/dimensions/{id}/lore</span>
+                <span class="desc">Get world lore</span>
+            </div>
+            <div class="endpoint">
+                <span class="method">GET</span>
+                <span class="path">/api/search?q=</span>
+                <span class="desc">Search across dimensions</span>
+            </div>
+        </div>
+    </section>
+
+    <section id="start">
+        <h2>🚀 Quick Start</h2>
+        <p class="subtitle">Run RAPPhub locally in 30 seconds.</p>
+        <div class="code-block">
+            <button class="copy-btn" onclick="copyCode()">Copy</button>
+            <code>
+<span class="comment"># Clone and run</span>
+<span class="cmd">git clone</span> https://github.com/kody-w/RAPP_Hub.git
+<span class="cmd">cd</span> RAPP_Hub
+<span class="cmd">docker-compose up -d</span>
+
+<span class="comment"># Server at http://localhost:8888</span>
+<span class="comment"># UI at http://localhost:8888/ui</span>
+            </code>
+        </div>
+    </section>
+
+    <footer>
+        <div class="links">
+            <a href="https://github.com/kody-w/RAPP_Hub">GitHub</a>
+            <a href="https://github.com/kody-w/openrapp">openrapp</a>
+            <a href="https://github.com/kody-w/rappverse">RAPPverse 3D</a>
+            <a href="https://github.com/kody-w/RAPP_Store">RAPP Store</a>
+            <a href="SKILL.md">AI Agent Docs</a>
+        </div>
+        <p>Part of the RAPP Ecosystem</p>
+        <p class="motto">🌌 Same seed. Same world. Always.</p>
+    </footer>
 
     <script>
-        // Load world state on init
-        document.addEventListener('DOMContentLoaded', () => {
-            loadWorldState();
-            loadConfig();
-        });
-
-        async function loadWorldState() {
+        // Load universes from manifest
+        async function loadUniverses() {
             try {
-                const response = await fetch('https://raw.githubusercontent.com/kody-w/CommunityRAPP/main/rappzoo/world/current_tick.json');
-                const tick = await response.json();
-
-                document.getElementById('tick-count').textContent = tick.tick || 1;
-                document.getElementById('crowd-count').textContent = (tick.crowd?.population || 0).toLocaleString();
-                document.getElementById('npc-count').textContent = Object.keys(tick.npcs || {}).length;
-                document.getElementById('debate-count').textContent = tick.debate_transcript?.turns?.length || 0;
-
-                document.getElementById('live-tick-num').textContent = `Tick #${tick.tick || 1}`;
-                document.getElementById('live-tick-time').textContent = ` - ${tick.world?.time_of_day || 'Unknown'}`;
+                const res = await fetch('worlds/manifest.json');
+                const manifest = await res.json();
+                renderUniverses(manifest.universes || []);
             } catch (e) {
-                console.error('Failed to load world state:', e);
+                document.getElementById('universes-container').innerHTML = `
+                    <div class="universe-card">
+                        <div class="icon">🕐</div>
+                        <h3>Temporal</h3>
+                        <p>Universes seeded by moments in time. Every second has a unique world.</p>
+                        <div class="dimension-card">
+                            <h4>Nexus</h4>
+                            <p>The first RAPPverse dimension. Seed: <span class="seed">2026</span></p>
+                            <p>Mood: <strong style="color: var(--warning)">unease</strong></p>
+                            <div class="npc-list">
+                                <span class="npc">Nexra</span>
+                                <span class="npc">Dexel</span>
+                                <span class="npc">Paxax</span>
+                                <span class="npc">Galum</span>
+                            </div>
+                        </div>
+                        <div class="meta">
+                            <span class="badge badge-active">1 dimension</span>
+                        </div>
+                    </div>
+                    <div class="universe-card">
+                        <div class="icon">🎵</div>
+                        <h3>Sonic</h3>
+                        <p>Universes seeded by music. Every song generates a world matching its vibe.</p>
+                        <div class="meta"><span class="badge badge-empty">Coming soon</span></div>
+                    </div>
+                    <div class="universe-card">
+                        <div class="icon">📚</div>
+                        <h3>Literary</h3>
+                        <p>Universes seeded by books. Every ISBN is a world where that book's themes are reality.</p>
+                        <div class="meta"><span class="badge badge-empty">Coming soon</span></div>
+                    </div>
+                    <div class="universe-card">
+                        <div class="icon">🌍</div>
+                        <h3>Geographic</h3>
+                        <p>Universes seeded by coordinates. Every location on Earth has its own dimension.</p>
+                        <div class="meta"><span class="badge badge-empty">Coming soon</span></div>
+                    </div>
+                    <div class="universe-card">
+                        <div class="icon">🔢</div>
+                        <h3>Mathematical</h3>
+                        <p>Universes seeded by number sequences. Pi, primes, Fibonacci - each has a world.</p>
+                        <div class="meta"><span class="badge badge-empty">Coming soon</span></div>
+                    </div>
+                    <div class="universe-card">
+                        <div class="icon">🎲</div>
+                        <h3>Convergence</h3>
+                        <p>Hybrid universes from combined seeds. Where multiple realities intersect.</p>
+                        <div class="meta"><span class="badge badge-empty">Coming soon</span></div>
+                    </div>
+                `;
             }
         }
 
-        // Config
-        function showConfigModal() {
-            document.getElementById('config-modal').classList.add('active');
-        }
-
-        function hideConfigModal() {
-            document.getElementById('config-modal').classList.remove('active');
-        }
-
-        function loadConfig() {
-            const config = JSON.parse(localStorage.getItem('rapp-hub-config') || '{}');
-            if (config.apiUrl) {
-                document.getElementById('api-url').value = config.apiUrl;
-                document.getElementById('api-key').value = config.apiKey || '';
+        function renderUniverses(universes) {
+            const container = document.getElementById('universes-container');
+            let html = '';
+            
+            for (const u of universes) {
+                const dimCount = (u.dimensions || []).length;
+                html += `
+                    <div class="universe-card">
+                        <div class="icon">${u.icon}</div>
+                        <h3>${u.name}</h3>
+                        <p>${u.description}</p>
+                `;
+                
+                for (const d of u.dimensions || []) {
+                    html += `
+                        <div class="dimension-card">
+                            <h4>${d.name}</h4>
+                            <p>Seed: <span class="seed">${d.seed}</span></p>
+                            <p>Mood: <strong style="color: var(--warning)">${d.mood || '?'}</strong></p>
+                            <div class="npc-list">
+                                ${(d.npcs || []).map(n => `<span class="npc">${n}</span>`).join('')}
+                            </div>
+                            <p style="margin-top: 0.5rem; font-size: 0.85rem; color: var(--text-muted)">
+                                Tick: ${d.current_tick || '?'} | Posts: ${d.total_posts || '?'}
+                            </p>
+                        </div>
+                    `;
+                }
+                
+                html += `
+                        <div class="meta">
+                            <span class="badge ${dimCount > 0 ? 'badge-active' : 'badge-empty'}">
+                                ${dimCount > 0 ? `${dimCount} dimension${dimCount > 1 ? 's' : ''}` : 'Coming soon'}
+                            </span>
+                        </div>
+                    </div>
+                `;
             }
+            
+            container.innerHTML = html;
         }
 
-        document.getElementById('config-form').addEventListener('submit', (e) => {
-            e.preventDefault();
-            const config = {
-                apiUrl: document.getElementById('api-url').value,
-                apiKey: document.getElementById('api-key').value
-            };
-            localStorage.setItem('rapp-hub-config', JSON.stringify(config));
-            hideConfigModal();
-            alert('Configuration saved! Your API endpoint is stored locally.');
+        function copyCode() {
+            const code = `git clone https://github.com/kody-w/RAPP_Hub.git
+cd RAPP_Hub
+docker-compose up -d`;
+            navigator.clipboard.writeText(code);
+            const btn = document.querySelector('.copy-btn');
+            btn.textContent = 'Copied!';
+            setTimeout(() => btn.textContent = 'Copy', 2000);
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
         });
 
-        // Refresh tick every 30 seconds
-        setInterval(loadWorldState, 30000);
+        loadUniverses();
     </script>
 </body>
 </html>
