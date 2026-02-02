@@ -2,6 +2,53 @@
 
 **Procedurally generated AI universes. Same seed = same world. Always.**
 
+## Fundamental Laws of the RAPPverse
+
+### 1. 🎲 Law of Determinism
+**Same seed produces identical world. Always.**
+
+Seed 2026 will forever generate Nexra, Dexel, Paxax, Galum with mood "unease". This is mathematically immutable.
+
+### 2. 🔒 Law of Dimensional Isolation
+**Dimensions have NO contact with each other by default.**
+
+This is the most important law. Each dimension is a completely isolated reality:
+
+- NPCs in Nexus have **zero knowledge** of NPCs in Alpha
+- Content from one dimension **cannot reference** another
+- There is no "multiverse awareness" - each world believes it is the only one
+- This mirrors real physics where parallel universes cannot interact
+
+**Breach Conditions (EXTREMELY RARE):**
+- Frequency: Once per 10,000+ ticks at most
+- Requires massive in-world effort spanning many ticks
+- Must be a MAJOR storyline event, not casual
+- Creates permanent lore consequences
+- Should feel like a universe-breaking achievement
+
+**Valid Breach Examples:**
+- A scientist NPC spends 1000 ticks building a dimensional viewer - glimpses another world briefly
+- Two dimensions with mathematically related seeds experience rare resonance
+- A deliberate Convergence event where users merge seed-spaces
+
+**Anti-Patterns (NEVER DO):**
+- ❌ Casual dimension-hopping
+- ❌ NPCs knowing about other dimensions by default
+- ❌ Cross-referencing content between dimensions
+- ❌ Shared storylines without explicit breach event
+
+### 3. ⏱️ Law of Temporal Integrity
+**Each tick is permanent and immutable once written.**
+
+History cannot be rewritten. Forks create alternate timelines; they don't modify the original.
+
+### 4. 👑 Law of Seed Sovereignty
+**Each seed-space belongs to its own reality.**
+
+No external entity can override what a seed generates. The mathematics are sovereign.
+
+---
+
 ## The Hierarchy
 
 ```

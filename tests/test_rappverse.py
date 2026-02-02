@@ -518,6 +518,115 @@ class TestTimeMechanics:
 
 
 # =============================================================================
+# 7. DIMENSIONAL ISOLATION (The Most Important Law)
+# =============================================================================
+
+class TestDimensionalIsolation:
+    """
+    Dimensions have NO contact with each other by default.
+    This is the most fundamental law of the RAPPverse.
+    """
+    
+    def test_no_cross_dimension_npc_knowledge(self):
+        """NPCs in one dimension have zero knowledge of other dimensions."""
+        nexus = get_dimension("nexus")
+        alpha = get_dimension("alpha")
+        
+        nexus_npc = nexus["npcs"][0]
+        
+        # NPC's knowledge should only reference their own dimension
+        knowledge = get_npc_knowledge(nexus_npc)
+        
+        assert "alpha" not in str(knowledge).lower()
+        assert all(ref["dimension"] == "nexus" for ref in knowledge.get("references", []))
+    
+    def test_no_cross_dimension_content_references(self):
+        """Content cannot reference other dimensions."""
+        post = create_post(
+            dimension="nexus",
+            content="I heard about events in Alpha dimension..."
+        )
+        
+        # Should be rejected or sanitized
+        assert post["status"] == "rejected"
+        assert "dimensional_isolation_violation" in post["rejection_reason"]
+    
+    def test_dimension_believes_it_is_alone(self):
+        """Each dimension's worldview contains only itself."""
+        nexus = get_dimension("nexus")
+        worldview = get_dimension_worldview(nexus)
+        
+        assert worldview["known_dimensions"] == ["nexus"]
+        assert worldview["multiverse_aware"] == False
+    
+    def test_breach_requires_extreme_effort(self):
+        """Dimensional breach requires thousands of ticks of effort."""
+        breach_attempt = attempt_dimensional_breach(
+            source="nexus",
+            target="alpha",
+            effort_ticks=100  # Not enough
+        )
+        
+        assert breach_attempt["success"] == False
+        assert breach_attempt["required_ticks"] >= 10000
+    
+    def test_breach_is_storyline_event(self):
+        """Successful breach must be marked as major storyline event."""
+        # Simulate a legitimate breach after massive effort
+        breach = create_dimensional_breach(
+            source="nexus",
+            target="alpha",
+            effort_ticks=15000,
+            storyline_id="the_great_resonance"
+        )
+        
+        assert breach["event_type"] == "major_storyline"
+        assert breach["lore_impact"] == "permanent"
+        assert breach["affects_both_dimensions"] == True
+    
+    def test_breach_creates_permanent_lore(self):
+        """Breach events are recorded in both dimensions' lore forever."""
+        breach = execute_approved_breach(
+            source="nexus",
+            target="alpha"
+        )
+        
+        nexus_lore = get_dimension("nexus")["lore"]
+        alpha_lore = get_dimension("alpha")["lore"]
+        
+        assert breach["id"] in nexus_lore["dimensional_breaches"]
+        assert breach["id"] in alpha_lore["dimensional_breaches"]
+    
+    def test_no_casual_dimension_hopping(self):
+        """Users and NPCs cannot casually move between dimensions."""
+        npc = get_npc("nexus", "Nexra")
+        
+        with pytest.raises(DimensionalIsolationViolation):
+            move_npc_to_dimension(npc, target="alpha")
+    
+    def test_search_respects_isolation(self):
+        """Search results only show content from queried dimension."""
+        results = search_posts(
+            dimension="nexus",
+            query="mysterious event"
+        )
+        
+        assert all(p["dimension"] == "nexus" for p in results)
+    
+    def test_feed_is_dimension_local(self):
+        """Content feeds only show dimension-local content."""
+        feed = get_dimension_feed("nexus")
+        
+        assert all(post["dimension"] == "nexus" for post in feed["posts"])
+        assert all(comment["dimension"] == "nexus" for comment in feed["comments"])
+
+
+class DimensionalIsolationViolation(Exception):
+    """Raised when an action would violate dimensional isolation."""
+    pass
+
+
+# =============================================================================
 # HELPER FUNCTIONS (To be implemented)
 # =============================================================================
 

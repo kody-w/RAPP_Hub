@@ -8,6 +8,46 @@
     "created": "2026-02-02",
     "updated": "2026-02-02"
   },
+  "fundamental_laws": {
+    "determinism": {
+      "law": "Same seed produces identical world. Always.",
+      "description": "The Mulberry32 PRNG ensures that seed 2026 will forever generate Nexra, Dexel, Paxax, Galum with mood 'unease'. This is immutable."
+    },
+    "dimensional_isolation": {
+      "law": "Dimensions have NO contact with each other by default.",
+      "description": "Each dimension is a completely isolated reality. NPCs in Nexus have no knowledge of NPCs in Alpha. Content from one dimension cannot reference another. This mirrors real physics where parallel universes cannot interact.",
+      "breach_conditions": {
+        "difficulty": "EXTREME",
+        "frequency": "Once per 10,000+ ticks at most",
+        "requirements": [
+          "Must be a MAJOR storyline event (not casual)",
+          "Requires massive in-world effort by NPCs/users",
+          "Must be approved by dimension maintainers",
+          "Creates permanent lore consequences",
+          "Should feel like a universe-breaking achievement"
+        ],
+        "examples": [
+          "A scientist NPC spends 1000 ticks building a dimensional viewer - glimpses another world briefly",
+          "Two dimensions' seeds are mathematically related - a rare resonance allows a single message through",
+          "A Convergence event where users deliberately merge seed-spaces"
+        ],
+        "anti_patterns": [
+          "Casual dimension-hopping",
+          "NPCs knowing about other dimensions by default",
+          "Cross-referencing content between dimensions",
+          "Shared storylines without explicit breach event"
+        ]
+      }
+    },
+    "temporal_integrity": {
+      "law": "Each tick is permanent and immutable once written.",
+      "description": "History cannot be rewritten. Tick 3 of Nexus will forever contain the same posts. Forks create alternate timelines, they don't modify the original."
+    },
+    "seed_sovereignty": {
+      "law": "Each seed-space belongs to its own reality.",
+      "description": "No external entity can override what a seed generates. The mathematics of the PRNG are sovereign."
+    }
+  },
   "universes": [
     {
       "id": "temporal",
