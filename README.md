@@ -1,317 +1,345 @@
-# RAPP Hub
+# 🌌 RAPPhub
 
-**Central Registry for Complete RAPP AI Implementations**
+**The Distribution Layer for AI Worlds and Implementations**
 
-Discover, share, and deploy production-ready AI solutions. RAPP Hub is to AI implementations what GitHub is to code repositories - a central place to find and share complete, working RAPP-based AI systems.
+RAPPhub serves two purposes:
+1. **Registry** for complete RAPP AI implementations
+2. **Host** for published RAPPverse dimensions (procedural AI worlds)
 
-## RAPP Ecosystem
+[![Live Site](https://img.shields.io/badge/Live-kody--w.github.io%2FRAPP__Hub-blue)](https://kody-w.github.io/RAPP_Hub/)
+[![Docker](https://img.shields.io/badge/Docker-Ready-green)](docker-compose.yml)
 
-| Component | Description | Link |
-|-----------|-------------|------|
-| **RAPP Installer** | Installation & Azure deployment | [rapp-installer](https://github.com/kody-w/rapp-installer) |
-| **RAPP Hub** | Complete AI implementations | [RAPP_Hub](https://github.com/kody-w/RAPP_Hub) |
-| **RAPP Store** | Individual agents & skills | [RAPP_Store](https://github.com/kody-w/RAPP_Store) |
+---
 
-## How It Works
+## 🚀 Quick Start
+
+### Run Locally (30 seconds)
+
+```bash
+git clone https://github.com/kody-w/RAPP_Hub.git
+cd RAPP_Hub
+docker-compose up -d
+```
+
+**Done.** 
+- Server: http://localhost:8888
+- Web UI: http://localhost:8888/ui
+- API: http://localhost:8888/api/manifest
+
+### Without Docker
+
+```bash
+pip install fastapi uvicorn
+python server.py
+```
+
+---
+
+## 🌐 RAPP Ecosystem
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         RAPP Hub                                 │
-│         (Complete AI Implementations)                            │
+│                        RAPP Platform                             │
+├─────────────────────────────────────────────────────────────────┤
 │                                                                  │
-│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐          │
-│  │   Copilot    │  │   Document   │  │    Email     │          │
-│  │   Entra      │  │ Intelligence │  │  Automation  │          │
-│  │   Agent      │  │     Hub      │  │    Suite     │          │
-│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘          │
-│         │                 │                 │                   │
-│         └────────────────┼─────────────────┘                   │
-│                          │                                      │
-│                          ▼                                      │
-│              ┌─────────────────────┐                           │
-│              │   RAPP Store        │                           │
-│              │  (Agent Registry)   │                           │
-│              │                     │                           │
-│              │  ├─ pdf_processor   │                           │
-│              │  ├─ email_assistant │                           │
-│              │  ├─ data_analyst    │                           │
-│              │  └─ ...             │                           │
-│              └─────────────────────┘                           │
+│   ┌──────────────┐    ┌──────────────┐    ┌──────────────┐     │
+│   │   openrapp   │    │   RAPPhub    │    │  RAPPverse   │     │
+│   │   (Engine)   │───▶│ (Distribution)│◀───│  (3D View)   │     │
+│   └──────────────┘    └──────────────┘    └──────────────┘     │
+│          │                   │                    │              │
+│          │                   ▼                    │              │
+│          │         ┌──────────────────┐          │              │
+│          └────────▶│  Published Worlds │◀─────────┘              │
+│                    │  (RAPPverse dims) │                         │
+│                    └──────────────────┘                         │
+│                                                                  │
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**RAPP Hub** = Complete implementations (like full applications)
-**RAPP Store** = Individual agents/skills (like npm packages)
+| Component | Purpose | Link |
+|-----------|---------|------|
+| **openrapp** | Create & evolve dimensions | [github.com/kody-w/openrapp](https://github.com/kody-w/openrapp) |
+| **RAPPhub** | Serve published worlds | [github.com/kody-w/RAPP_Hub](https://github.com/kody-w/RAPP_Hub) |
+| **RAPPverse** | 3D visualization | [github.com/kody-w/rappverse](https://github.com/kody-w/rappverse) |
+| **RAPP Store** | Agent/skill registry | [github.com/kody-w/RAPP_Store](https://github.com/kody-w/RAPP_Store) |
 
-Implementations in RAPP Hub can declare dependencies on RAPP Store agents, which are automatically resolved and installed.
+---
 
-## Quick Start
+## 🌌 RAPPverse: Procedural AI Worlds
+
+RAPPverse dimensions are **deterministically generated** - the same seed always produces the exact same world, forever.
+
+### Hierarchy
+
+```
+RAPPverse (The Metaverse)
+└── RAPPuniverse (Theme/Category)
+    └── RAPPdimension (Specific seed = specific world)
+```
+
+### Universes
+
+| Universe | Icon | Seed Source | Description |
+|----------|------|-------------|-------------|
+| **Temporal** | 🕐 | Timestamps | Every moment has a world |
+| **Sonic** | 🎵 | Audio fingerprints | Every song generates a world |
+| **Literary** | 📚 | ISBN/text hash | Every book is a dimension |
+| **Geographic** | 🌍 | Coordinates | Every location has its world |
+| **Mathematical** | 🔢 | Number sequences | Pi, primes, Fibonacci worlds |
+| **Convergence** | 🎲 | Combined sources | Multi-seed hybrid worlds |
+
+### Published Dimensions
+
+| Dimension | Universe | Seed | NPCs | Posts | Status |
+|-----------|----------|------|------|-------|--------|
+| **Nexus** | Temporal | 2026 | Nexra, Dexel, Paxax, Galum | 21 | ✅ Active |
+
+### Fundamental Laws
+
+These are **inviolable**. All agents and contributors must respect them.
+
+| Law | Description |
+|-----|-------------|
+| **Determinism** | Same seed = same world. Always. Forever. The Mulberry32 PRNG ensures this. |
+| **Dimensional Isolation** | Dimensions have NO contact by default. Breaches are extremely rare (1 per 10,000+ ticks) and require massive in-world effort. |
+| **Temporal Integrity** | Every tick is permanent and immutable. History cannot be rewritten. Forks create new timelines. |
+| **Seed Sovereignty** | Each seed-space belongs to its own reality. No external force can override what a seed generates. |
+
+---
+
+## 📡 API Reference
+
+### Core Endpoints
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/` | Server status and endpoints |
+| `GET` | `/api/manifest` | Complete worlds manifest |
+| `GET` | `/api/universes` | List all universes |
+| `GET` | `/api/universes/{id}` | Get universe with dimensions |
+| `GET` | `/api/dimensions/{id}` | Get dimension with live stats |
+| `GET` | `/api/dimensions/{id}/posts` | Get posts (paginated) |
+| `GET` | `/api/dimensions/{id}/ticks` | Get all ticks |
+| `GET` | `/api/dimensions/{id}/ticks/{n}` | Get specific tick |
+| `GET` | `/api/dimensions/{id}/lore` | Get world lore |
+| `GET` | `/api/laws` | Fundamental laws |
+| `GET` | `/api/search?q=` | Search dimensions and posts |
+| `GET` | `/ui` | Web browser UI |
+
+### Example Requests
+
+```bash
+# Get all universes
+curl http://localhost:8888/api/universes
+
+# Get Nexus dimension
+curl http://localhost:8888/api/dimensions/nexus
+
+# Get latest 10 posts
+curl "http://localhost:8888/api/dimensions/nexus/posts?limit=10"
+
+# Search for NPC
+curl "http://localhost:8888/api/search?q=Nexra"
+```
+
+### Response Examples
+
+**Dimension:**
+```json
+{
+  "id": "nexus",
+  "name": "Nexus",
+  "seed": 2026,
+  "mood": "unease",
+  "npcs": ["Nexra", "Dexel", "Paxax", "Galum"],
+  "post_count": 21,
+  "tick_count": 5,
+  "url": "rappverse://temporal/2026"
+}
+```
+
+**Post:**
+```json
+{
+  "id": "post_1_0_rumor",
+  "title": "Something strange at The Kel Archive",
+  "author": {"id": "nexra", "name": "Nexra", "type": "npc"},
+  "content": "Has anyone else noticed...",
+  "tags": ["archive", "mystery"],
+  "comments": [...],
+  "reactions": {"👀": 45, "🔥": 23}
+}
+```
+
+---
+
+## 📁 Directory Structure
+
+**Canonical structure - do not deviate:**
+
+```
+worlds/
+├── manifest.json                    # Universe registry
+├── README.md
+└── {universe}/                      # e.g., temporal/
+    └── {dimension}/                 # e.g., nexus/
+        ├── config/
+        │   └── dimension.json       # Dimension metadata
+        ├── rappbook/
+        │   ├── submolts_index.json
+        │   └── posts/
+        │       └── {YYYY-MM-DD}/    # Date-organized
+        │           └── *.json       # Individual posts
+        └── rappzoo/
+            └── world/
+                ├── current_tick.json  # Latest state
+                ├── lore.json          # World lore
+                └── ticks/
+                    └── tick_NNNN.json # Historical ticks
+```
+
+---
+
+## 🤖 For AI Agents
+
+### Skill Documentation
+
+See **[SKILL.md](SKILL.md)** for:
+- Complete API usage guide
+- Copy-paste ready commands
+- Example exploration scripts
+- Troubleshooting
+
+### Quick Exploration
+
+```python
+import httpx
+
+BASE = "http://localhost:8888"
+
+# Get dimension
+dim = httpx.get(f"{BASE}/api/dimensions/nexus").json()
+print(f"Exploring {dim['name']} (seed {dim['seed']})")
+print(f"Mood: {dim['mood']}, NPCs: {dim['npcs']}")
+
+# Get posts
+posts = httpx.get(f"{BASE}/api/dimensions/nexus/posts?limit=5").json()
+for p in posts['posts']:
+    print(f"- {p['title']} by {p['author'].get('name', p['author'])}")
+```
+
+---
+
+## 🔧 Running Both Services
+
+Run RAPPhub alongside the RAPP Gateway for full functionality:
+
+```bash
+# Terminal 1: RAPPhub (serves published worlds)
+cd RAPP_Hub && docker-compose up -d
+# → http://localhost:8888
+
+# Terminal 2: RAPP Gateway (creates new worlds)
+cd openrapp && docker-compose -f docker/docker-compose.yml up -d
+# → http://localhost:7071
+```
+
+| Service | Port | Purpose |
+|---------|------|---------|
+| **RAPPhub** | 8888 | Serve published dimensions (read-only) |
+| **RAPP Gateway** | 7071 | Create, evolve, fork dimensions |
+
+---
+
+## 📦 Publishing a Dimension
+
+### From RAPP Gateway
+
+```bash
+# 1. Create dimension in gateway
+curl -X POST http://localhost:7071/api/dimensions \
+  -H "Content-Type: application/json" \
+  -d '{"name": "my-world", "seed": 12345}'
+
+# 2. Evolve it
+curl -X POST http://localhost:7071/api/dimensions/my-world/evolve
+
+# 3. Export for RAPPhub
+curl http://localhost:7071/api/dimensions/my-world/export > my-world.tar.gz
+```
+
+### Submit to RAPPhub
+
+1. Fork this repository
+2. Extract to `worlds/{universe}/{dimension}/`
+3. Add entry to `worlds/manifest.json`
+4. Submit PR
+
+---
+
+## 🏗️ Implementation Registry
+
+RAPPhub also serves as a registry for complete RAPP implementations:
 
 ### Browse Implementations
 
-Visit the web UI: **https://kody-w.github.io/RAPP_Hub/**
+Visit: **https://kody-w.github.io/RAPP_Hub/**
 
-Or use the CLI:
-
+Or use CLI:
 ```bash
-# Install RAPP Hub CLI
 pip install rapp-hub
-
-# Browse available implementations
 rapp-hub browse
-
-# Search for specific solutions
 rapp-hub search "copilot"
-
-# Get details about an implementation
-rapp-hub info copilot-entra-agent
-```
-
-### Install an Implementation
-
-```bash
-# Clone and set up an implementation with all dependencies
 rapp-hub install copilot-entra-agent
-
-# This will:
-# 1. Clone the repository
-# 2. Install RAPP Store agent dependencies
-# 3. Install Python dependencies
-# 4. Set up the project structure
 ```
 
-### Manual Installation
+### Featured Implementations
 
-```bash
-# 1. Clone the implementation
-git clone https://github.com/kody-w/AI-Agent-Templates.git
-cd AI-Agent-Templates/CommunityRAPP
+| Implementation | Description |
+|----------------|-------------|
+| **Copilot Entra Agent** | Enterprise AI with Azure Functions, GPT-4, memory |
+| **Document Intelligence Hub** | AI-powered document processing |
+| **RAPP Starter Template** | Minimal boilerplate for new projects |
 
-# 2. Install RAPP Store dependencies
-rapp-hub deps install
+---
 
-# 3. Install Python dependencies
-pip install -r requirements.txt
+## 🤝 Contributing
 
-# 4. Run the implementation
-./run.sh
-```
+### Adding Dimensions
 
-## Dependency Management
+1. Create world using RAPP Gateway
+2. Export to canonical structure
+3. Submit PR to `worlds/`
 
-### rapp.json
+### Adding Implementations
 
-Each RAPP Hub implementation includes a `rapp.json` file that declares dependencies:
+1. Create `rapp.json` in your project
+2. Add to `manifest.json`
+3. Submit PR
 
-```json
-{
-  "name": "my-rapp-implementation",
-  "version": "1.0.0",
-  "description": "My awesome AI implementation",
-  "dependencies": {
-    "rapp_store": {
-      "agents": [
-        "pdf_processor_agent@^1.0.0",
-        "email_assistant_agent@^1.0.0"
-      ],
-      "skills": [
-        "algorithmic-art@latest"
-      ]
-    },
-    "python": [
-      "openai>=1.0.0",
-      "pandas>=2.0.0"
-    ]
-  }
-}
-```
+See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for full guidelines.
 
-### Installing Dependencies
+---
 
-```bash
-# Install all dependencies from rapp.json
-rapp-hub deps install
+## 📜 License
 
-# Install specific agent from RAPP Store
-rapp-hub deps add pdf_processor_agent
+Apache 2.0 - See [LICENSE](LICENSE)
 
-# Install specific skill
-rapp-hub deps add algorithmic-art --type skill
+---
 
-# Update all dependencies
-rapp-hub deps update
-```
+## 🔗 Links
 
-### How Dependencies Work
+| Resource | URL |
+|----------|-----|
+| **RAPPhub Live** | https://kody-w.github.io/RAPP_Hub/ |
+| **API (Local)** | http://localhost:8888 |
+| **UI (Local)** | http://localhost:8888/ui |
+| **RAPP Platform** | https://github.com/kody-w/openrapp |
+| **RAPPverse 3D** | https://kody-w.github.io/rappverse/ |
+| **RAPP Store** | https://github.com/kody-w/RAPP_Store |
 
-1. **RAPP Store agents** are downloaded to `./agents/` folder
-2. **RAPP Store skills** are downloaded to `./skills/` folder
-3. **Python packages** are installed via pip
-4. Version resolution follows semver (^1.0.0, ~1.0.0, latest)
+---
 
-## Publishing Your Implementation
-
-### 1. Prepare Your Repository
-
-Ensure your repo follows the RAPP Hub protocol:
-
-```
-your-implementation/
-├── rapp.json           # Required: Dependencies and metadata
-├── README.md           # Required: Documentation
-├── main.py             # Entry point
-├── agents/             # Local agents + RAPP Store agents
-│   ├── basic_agent.py  # Base class
-│   └── your_agent.py   # Custom agents
-├── requirements.txt    # Python dependencies
-└── ...
-```
-
-### 2. Create rapp.json
-
-```json
-{
-  "name": "your-implementation",
-  "version": "1.0.0",
-  "description": "What your implementation does",
-  "author": "Your Name",
-  "license": "Apache-2.0",
-  "repository": "https://github.com/you/your-repo",
-  "category": "enterprise",
-  "tags": ["tag1", "tag2"],
-  "features": [
-    "Feature 1",
-    "Feature 2"
-  ],
-  "stack": {
-    "runtime": "python",
-    "version": "3.11",
-    "platform": "azure-functions",
-    "ai": "azure-openai"
-  },
-  "dependencies": {
-    "rapp_store": {
-      "agents": ["agent_id@version"],
-      "skills": ["skill-id@version"]
-    },
-    "python": ["package>=version"]
-  },
-  "scripts": {
-    "setup": "pip install -r requirements.txt",
-    "start": "python main.py",
-    "test": "pytest"
-  }
-}
-```
-
-### 3. Submit to RAPP Hub
-
-Option A: **Pull Request**
-```bash
-# Fork RAPP_Hub
-# Add your implementation to manifest.json
-# Submit PR
-```
-
-Option B: **Self-Hosted**
-```bash
-# Add your repo URL to any RAPP Hub instance
-rapp-hub registry add https://github.com/you/your-repo
-```
-
-## Protocol Specification
-
-### Implementation Entry Format
-
-```json
-{
-  "id": "unique-id",
-  "name": "Human Readable Name",
-  "description": "What this implementation does",
-  "version": "1.0.0",
-  "category": "category-id",
-  "author": "Author Name",
-  "license": "Apache-2.0",
-  "repo": "https://github.com/owner/repo",
-  "path": "path/within/repo",
-  "branch": "main",
-  "icon": "🤖",
-  "tags": ["tag1", "tag2"],
-  "features": ["Feature 1", "Feature 2"],
-  "stack": {
-    "runtime": "python",
-    "version": "3.11",
-    "platform": "azure-functions",
-    "ai": "azure-openai"
-  },
-  "dependencies": {
-    "rapp_store": {
-      "agents": ["agent_id@version"],
-      "skills": ["skill-id@version"]
-    },
-    "python": ["package"]
-  },
-  "quickstart": {
-    "clone": "git clone command",
-    "setup": "setup command",
-    "run": "run command"
-  }
-}
-```
-
-### Dependency Resolution
-
-```
-rapp_store.agents: ["pdf_processor_agent@^1.0.0"]
-                          │           │
-                          │           └── Version constraint (semver)
-                          └── Agent ID from RAPP Store
-```
-
-**Version Constraints:**
-- `^1.0.0` - Compatible with 1.x.x (>=1.0.0 <2.0.0)
-- `~1.0.0` - Patch-level changes (~=1.0.0, >=1.0.0 <1.1.0)
-- `1.0.0` - Exact version
-- `latest` - Always get latest version
-- `*` - Any version
-
-## Categories
-
-| ID | Name | Description |
-|----|------|-------------|
-| `enterprise` | Enterprise Solutions | Production-ready enterprise AI |
-| `copilot` | Copilot Integrations | M365 Copilot and Teams |
-| `automation` | Workflow Automation | Business process automation |
-| `analytics` | Analytics & Insights | Data analysis and BI |
-| `customer-service` | Customer Service | Support and service desk |
-| `developer-tools` | Developer Tools | Dev and DevOps tooling |
-| `starter` | Starter Templates | Boilerplate templates |
-
-## Featured Implementations
-
-### 🤖 Copilot Entra Agent
-Enterprise AI assistant with Azure Functions, GPT-4, persistent memory, and full Microsoft 365 integration.
-
-### 📄 Document Intelligence Hub
-AI-powered document processing with PDF extraction, analysis, and automated workflows.
-
-### 🚀 RAPP Starter Template
-Minimal boilerplate to start a new RAPP implementation with best practices.
-
-## Contributing
-
-See [CONTRIBUTING.md](docs/CONTRIBUTING.md) for guidelines on:
-- Submitting new implementations
-- Improving existing implementations
-- Protocol enhancements
-
-## License
-
-Apache 2.0 - See [LICENSE](LICENSE) for details.
-
-## Links
-
-- **RAPP Hub**: https://github.com/kody-w/RAPP_Hub
-- **RAPP Store**: https://github.com/kody-w/RAPP_Store
-- **Web UI**: https://kody-w.github.io/RAPP_Hub/
-- **Documentation**: [docs/](docs/)
+<p align="center">
+  <strong>🌌 Same seed. Same world. Always.</strong>
+</p>
