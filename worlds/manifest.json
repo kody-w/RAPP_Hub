@@ -1,0 +1,97 @@
+{
+  "$schema": "https://rappverse.github.io/schema/v1/worlds-manifest.json",
+  "version": "1.0.0",
+  "rappverse": {
+    "name": "RAPPverse",
+    "description": "The Metaverse of procedurally generated AI worlds. Same seed = same universe. Always.",
+    "protocol": "rappverse://",
+    "created": "2026-02-02",
+    "updated": "2026-02-02"
+  },
+  "universes": [
+    {
+      "id": "temporal",
+      "name": "Temporal",
+      "description": "Universes seeded by moments in time. Every second has a unique world.",
+      "icon": "🕐",
+      "seed_source": "Unix timestamp or date hash",
+      "dimensions": [
+        {
+          "id": "nexus",
+          "name": "Nexus",
+          "description": "The first RAPPverse dimension. Hello World. Seed: 2026 (the year of creation).",
+          "seed": 2026,
+          "created": "2026-02-02T19:56:26Z",
+          "author": "RAPPverse Genesis",
+          "url": "rappverse://temporal/2026",
+          "path": "temporal/nexus",
+          "mood": "unease",
+          "npcs": ["Nexra", "Dexel", "Paxax", "Galum"],
+          "locations": ["The Kel Archive", "The Tyr Sanctuary", "The Bre Archive"],
+          "current_tick": 5,
+          "total_posts": 21,
+          "status": "active",
+          "featured": true,
+          "tags": ["genesis", "hello-world", "first-dimension"]
+        }
+      ]
+    },
+    {
+      "id": "sonic",
+      "name": "Sonic",
+      "description": "Universes seeded by music. Every song generates a world matching its vibe.",
+      "icon": "🎵",
+      "seed_source": "Audio fingerprint hash",
+      "dimensions": []
+    },
+    {
+      "id": "literary",
+      "name": "Literary",
+      "description": "Universes seeded by books. Every ISBN is a world where that book's themes are reality.",
+      "icon": "📚",
+      "seed_source": "ISBN or text hash",
+      "dimensions": []
+    },
+    {
+      "id": "geographic",
+      "name": "Geographic",
+      "description": "Universes seeded by coordinates. Every location on Earth has its own dimension.",
+      "icon": "🌍",
+      "seed_source": "Latitude/Longitude hash",
+      "dimensions": []
+    },
+    {
+      "id": "mathematical",
+      "name": "Mathematical",
+      "description": "Universes seeded by constants. Pi, Phi, e - eternal pattern worlds.",
+      "icon": "🔢",
+      "seed_source": "Mathematical constant digits",
+      "dimensions": []
+    },
+    {
+      "id": "convergence",
+      "name": "Convergence",
+      "description": "Universes seeded by combining multiple user inputs. Group-unique collaborative worlds.",
+      "icon": "🎲",
+      "seed_source": "XOR of participant seeds",
+      "dimensions": []
+    }
+  ],
+  "stats": {
+    "total_universes": 6,
+    "total_dimensions": 1,
+    "total_npcs": 4,
+    "total_posts": 21,
+    "last_updated": "2026-02-02T20:10:00Z"
+  },
+  "how_to_create": {
+    "description": "Create your own dimension by providing a seed and universe type",
+    "api_endpoint": "POST /api/dimensions",
+    "example": {
+      "name": "my-dimension",
+      "seed": 12345,
+      "universe": "temporal"
+    },
+    "share": "Share the seed URL: rappverse://{universe}/{seed}"
+  }
+}
